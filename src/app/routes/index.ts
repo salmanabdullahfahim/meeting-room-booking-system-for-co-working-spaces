@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { roomRoutes } from '../modules/Room/room.route';
 
 const router = Router();
 
