@@ -1,6 +1,7 @@
 import express from 'express';
 import validateRequest from '../../utils/validateRequest';
 import { roomValidations } from './room.validation';
+import { roomController } from './room.controller';
 
 const router = express.Router();
 
