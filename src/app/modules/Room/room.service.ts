@@ -7,6 +7,18 @@ const createRoomIntoDB = async (payload: TRoom) => {
   return result;
 };
 
+const getAllRoomsFromDB = async () => {
+  const result = await Room.find();
+  return result;
+};
+
+const getSingleRoomFromDB = async (id: string) => {
+  const result = await Room.findById(id);
+  return result;
+};
+
 export const RoomServices = {
   createRoomIntoDB,
+  getAllRoomsFromDB,
+  getSingleRoomFromDB,
 };
