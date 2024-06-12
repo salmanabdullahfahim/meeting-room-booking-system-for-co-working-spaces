@@ -21,4 +21,6 @@ router.put(
   roomController.updateRoom,
 );
 
+router.delete('/:id', roomController.deleteRoom);
+
 export const roomRoutes = router;
