@@ -1,5 +1,5 @@
 import { Slot } from './slot..model';
-import { TSlot } from './slot.interface';
+import { TSlot, TSlotQuery } from './slot.interface';
 import { formatTime, parseTime } from './slot.utils';
 
 // slot duration in minutes
@@ -36,15 +36,15 @@ const createSlotIntoDB = async (payload: TSlot) => {
 };
 
 // get available slots from db
-const getAvailableSlotsFromDb = async (date?: string, roomId?: string) => {
+const getAvailableSlotsFromDb = async (queryParams: TSlotQuery) => {
   const query: { date?: string; room?: string; isBooked?: boolean } = {
     isBooked: false,
   };
-  if (date) {
-    query.date = date;
+  if (queryParams?.date) {
+    query.date = queryParams.date;
   }
-  if (roomId) {
-    query.room = roomId;
+  if (queryParams?.roomId) {
+    query.room = queryParams.roomId;
   }
 
   const availAbleSlots = await Slot.find(query).populate('room');
