@@ -21,6 +21,7 @@ const createSlotIntoDB = async (payload: TSlot) => {
     const slotStart = formatTime(current);
     const slotEnd = formatTime(current + slotDurationInMinutes);
 
+    // create slot into db
     const slot = await Slot.create({
       room,
       date,
@@ -34,6 +35,22 @@ const createSlotIntoDB = async (payload: TSlot) => {
   return slots;
 };
 
+const getAvailableSlotsFromDb = async (date?: string, roomId?: string) => {
+  const query: { date?: string; room?: string; isBooked?: boolean } = {
+    isBooked: false,
+  };
+  if (date) {
+    query.date = date;
+  }
+  if (roomId) {
+    query.room = roomId;
+  }
+
+  const slots = await Slot.find(query).populate('room');
+  return slots;
+};
+
 export const slotService = {
   createSlotIntoDB,
+  getAvailableSlotsFromDb,
 };
