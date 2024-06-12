@@ -11,6 +11,30 @@ const createRoomValidationSchema = z.object({
   }),
 });
 
+const updateRoomValidationSchema = z.object({
+  body: z.object({
+    name: z
+      .string({ invalid_type_error: 'Room Name must be a string' })
+      .optional(),
+    roomNo: z
+      .number({ invalid_type_error: 'Room Number must be a number' })
+      .optional(),
+    floorNo: z
+      .number({ invalid_type_error: 'Floor Number must be a number' })
+      .optional(),
+    capacity: z
+      .number({ invalid_type_error: 'Capacity must be a number' })
+      .optional(),
+    pricePerSlot: z
+      .number({ invalid_type_error: 'Price Per Slot must be a number' })
+      .optional(),
+    amenities: z
+      .array(z.string({ invalid_type_error: 'Amenities must be a string' }))
+      .optional(),
+  }),
+});
+
 export const roomValidations = {
   createRoomValidationSchema,
+  updateRoomValidationSchema,
 };
