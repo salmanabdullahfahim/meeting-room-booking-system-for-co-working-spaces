@@ -4,6 +4,6 @@ import { slotController } from './slot.controller';
 const router = express.Router();
 
 router.post('/', slotController.createSlot);
-router.get('/availability', slotController.availableSlot);
+router.get('/availability', slotController.availableSlots);
 
 export const slotRoutes = router;

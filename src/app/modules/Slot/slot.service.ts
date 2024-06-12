@@ -35,6 +35,7 @@ const createSlotIntoDB = async (payload: TSlot) => {
   return slots;
 };
 
+// get available slots from db
 const getAvailableSlotsFromDb = async (date?: string, roomId?: string) => {
   const query: { date?: string; room?: string; isBooked?: boolean } = {
     isBooked: false,
@@ -46,8 +47,8 @@ const getAvailableSlotsFromDb = async (date?: string, roomId?: string) => {
     query.room = roomId;
   }
 
-  const slots = await Slot.find(query).populate('room');
-  return slots;
+  const availAbleSlots = await Slot.find(query).populate('room');
+  return availAbleSlots;
 };
 
 export const slotService = {
