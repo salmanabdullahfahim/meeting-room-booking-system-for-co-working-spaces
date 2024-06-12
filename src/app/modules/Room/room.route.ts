@@ -11,4 +11,10 @@ router.post(
   roomController.createRoom,
 );
 
+router.get('/', roomController.getAllRoom);
+
+router.get('/:id', roomController.getSingleRoom);
+
+router.put('/:id', roomController.updateRoom);
+
 export const roomRoutes = router;
