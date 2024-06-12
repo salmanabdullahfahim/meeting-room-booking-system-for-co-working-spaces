@@ -15,6 +15,10 @@ router.get('/', roomController.getAllRoom);
 
 router.get('/:id', roomController.getSingleRoom);
 
-router.put('/:id', roomController.updateRoom);
+router.put(
+  '/:id',
+  validateRequest(roomValidations.updateRoomValidationSchema),
+  roomController.updateRoom,
+);
 
 export const roomRoutes = router;
