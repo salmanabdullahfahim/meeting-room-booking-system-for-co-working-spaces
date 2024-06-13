@@ -12,7 +12,7 @@ const auth = (...RequiredRole: TUserRole[]) => {
     const authorizationHeader = req.headers.authorization;
     // check if the token is provided by the client
     if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
-      throw new AppError(httpStatus.UNAUTHORIZED, 'You Are Not Unauthorized');
+      throw new AppError(httpStatus.UNAUTHORIZED, 'You Are Not Authorized');
     }
 
     // Extract the token from the "Bearer <token>" format
