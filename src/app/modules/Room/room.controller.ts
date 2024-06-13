@@ -2,6 +2,7 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { RoomServices } from './room.service';
+import { sendNoDataFoundResponse } from '../../utils/noDataResponse';
 
 const createRoom = catchAsync(async (req, res) => {
   const result = await RoomServices.createRoomIntoDB(req.body);
@@ -15,6 +16,9 @@ const createRoom = catchAsync(async (req, res) => {
 
 const getAllRoom = catchAsync(async (req, res) => {
   const result = await RoomServices.getAllRoomsFromDB();
+  if (result.length === 0) {
+    return sendNoDataFoundResponse(res);
+  }
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,

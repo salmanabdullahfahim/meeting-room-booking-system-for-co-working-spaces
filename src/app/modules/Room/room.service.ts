@@ -25,6 +25,8 @@ const updateRoomIntoDB = async (id: string, payload: Partial<TRoom>) => {
     new: true,
     runValidators: true,
   });
+
+  if (!result) throw new AppError(httpStatus.NOT_FOUND, 'Invalid Room Id');
   return result;
 };
 
@@ -34,6 +36,8 @@ const deleteRoomFromDB = async (id: string) => {
     { isDeleted: true },
     { new: true },
   );
+
+  if (!result) throw new AppError(httpStatus.NOT_FOUND, 'Invalid Room Id');
   return result;
 };
 
