@@ -1,3 +1,5 @@
+import httpStatus from 'http-status';
+import AppError from '../../errors/AppError';
 import { Slot } from './slot..model';
 import { TSlot, TSlotQuery } from './slot.interface';
 import { formatTime, parseTime } from './slot.utils';
@@ -11,6 +13,13 @@ const createSlotIntoDB = async (payload: TSlot) => {
   // parse time string to minutes
   const start = parseTime(startTime);
   const end = parseTime(endTime);
+
+  if (start >= end) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      'startTime should be before endTime',
+    );
+  }
   const slots = [];
 
   for (
@@ -20,6 +29,18 @@ const createSlotIntoDB = async (payload: TSlot) => {
   ) {
     const slotStart = formatTime(current);
     const slotEnd = formatTime(current + slotDurationInMinutes);
+
+    // check for existing slots that overlap
+    const existingSlot = await Slot.findOne({
+      room,
+      date,
+      startTime: slotStart,
+      endTime: slotEnd,
+    });
+
+    if (existingSlot) {
+      throw new AppError(httpStatus.CONFLICT, `Slot already exists`);
+    }
 
     // create slot into db
     const slot = await Slot.create({
