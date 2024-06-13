@@ -12,7 +12,11 @@ const auth = (...RequiredRole: TUserRole[]) => {
     const authorizationHeader = req.headers.authorization;
     // check if the token is provided by the client
     if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
-      throw new AppError(httpStatus.UNAUTHORIZED, 'You Are Not Authorized');
+      return res.status(httpStatus.UNAUTHORIZED).json({
+        success: false,
+        statusCode: 401,
+        message: 'You have no access to this route',
+      });
     }
 
     // Extract the token from the "Bearer <token>" format
@@ -34,12 +38,20 @@ const auth = (...RequiredRole: TUserRole[]) => {
     // checking if the user exists
     const user = await User.isUserExistsByEmail(email);
     if (!user) {
-      throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
+      return res.status(httpStatus.UNAUTHORIZED).json({
+        success: false,
+        statusCode: 401,
+        message: 'You have no access to this route',
+      });
     }
 
     // checking if the user has the required role
     if (RequiredRole && !RequiredRole.includes(role)) {
-      throw new AppError(httpStatus.UNAUTHORIZED, 'You Are Not Authorized');
+      return res.status(httpStatus.UNAUTHORIZED).json({
+        success: false,
+        statusCode: 401,
+        message: 'You have no access to this route',
+      });
     }
 
     // attaching the decoded token to the request object
