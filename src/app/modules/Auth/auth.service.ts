@@ -35,7 +35,8 @@ const loginUser = async (payload: TLoginUser) => {
     config.jwt_access_secret as string,
     config.jwt_access_expires_in as string,
   );
-  // Convert user to Mongoose Document to access toObject method
+
+  // Convert user to Mongoose Document to access toObject methods
   const userDocument = user as Document & TUser;
   const userObject = userDocument.toObject();
   delete userObject.password; // Remove password field

@@ -1,3 +1,5 @@
+import httpStatus from 'http-status';
+import AppError from '../../errors/AppError';
 import { TRoom } from './room.interface';
 import { Room } from './room.model';
 
@@ -14,6 +16,7 @@ const getAllRoomsFromDB = async () => {
 
 const getSingleRoomFromDB = async (id: string) => {
   const result = await Room.findById(id);
+  if (!result) throw new AppError(httpStatus.NOT_FOUND, 'Invalid Room Id');
   return result;
 };
 
