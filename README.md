@@ -50,11 +50,11 @@ npm install
 
 ### 3. Environment Variables
 
-NODE_ENV=development
-PORT=5000
-DB_URL=mongodb://localhost:27017/room-booking
-JWT_ACCESS_SECRET=your_jwt_secret_key
-JWT_ACCESS_EXPIRE_IN=your choice
+- NODE_ENV=development
+- PORT=5000
+- DB_URL=mongodb://localhost:27017/room-booking
+- JWT_ACCESS_SECRET=your_jwt_secret_key
+- JWT_ACCESS_EXPIRE_IN=your choice
 
 ### 4. Start the Application
 
