@@ -38,8 +38,20 @@ const updateBooking = catchAsync(async (req, res) => {
   });
 });
 
+const deleteBooking = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const result = await bookingService.deleteBookingIntoDB(id);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Booking deleted successfully',
+    data: result,
+  });
+});
+
 export const bookingController = {
   createBooking,
   getAllBooking,
   updateBooking,
+  deleteBooking,
 };
