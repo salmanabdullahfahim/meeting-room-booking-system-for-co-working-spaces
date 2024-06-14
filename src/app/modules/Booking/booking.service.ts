@@ -6,6 +6,7 @@ import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
 import { User } from '../User/user.model';
 import { Slot } from '../Slot/slot..model';
+import { JwtPayload } from 'jsonwebtoken';
 
 const createBookingIntoDB = async (
   payload: Omit<TBooking, 'totalAmount'>,
@@ -122,6 +123,34 @@ const getAllBookingFromDB = async () => {
   return result;
 };
 
+const getUserBookingFromDB = async (payload: JwtPayload) => {
+  const userExist = await User.findOne({ email: payload?.email });
+
+  if (!userExist) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User not found');
+  }
+
+  const bookings = await Booking.find({ user: userExist._id })
+    .populate('room')
+    .select('-user -__v')
+    .exec();
+
+  const populatedBookings = await Promise.all(
+    bookings.map(async (booking) => {
+      const detailedSlots = await Promise.all(
+        booking.slots.map((slotId) => Slot.findById(slotId).exec()),
+      );
+
+      return {
+        ...booking.toObject(),
+        slots: detailedSlots,
+      };
+    }),
+  );
+
+  return populatedBookings;
+};
+
 const updateBookingIntoDB = async (id: string, payload: Partial<TBooking>) => {
   const isBookingExist = await Booking.findById(id);
 
@@ -166,4 +195,5 @@ export const bookingService = {
   getAllBookingFromDB,
   updateBookingIntoDB,
   deleteBookingIntoDB,
+  getUserBookingFromDB,
 };
