@@ -111,6 +111,18 @@ const createBookingIntoDB = async (
   }
 };
 
+const getAllBookingFromDB = async () => {
+  const result = await Booking.find()
+    .populate('room')
+    .populate({
+      path: 'user',
+      select: '-password -__v',
+    })
+    .exec();
+  return result;
+};
+
 export const bookingService = {
   createBookingIntoDB,
+  getAllBookingFromDB,
 };
