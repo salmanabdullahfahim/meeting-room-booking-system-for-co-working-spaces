@@ -53,6 +53,7 @@ npm install
 - NODE_ENV=development
 - PORT=5000
 - DB_URL=mongodb://localhost:27017/room-booking
+- BCRYPT_SALT_ROUNDS= your prefered salt rounds
 - JWT_ACCESS_SECRET=your_jwt_secret_key
 - JWT_ACCESS_EXPIRE_IN=your choice
 
