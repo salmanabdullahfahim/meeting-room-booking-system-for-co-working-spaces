@@ -2,6 +2,9 @@ import { z } from 'zod';
 
 const createRoomValidationSchema = z.object({
   body: z.object({
+    images: z
+      .array(z.string().url('Each image must be a valid URL'))
+      .min(2, 'At least two image is required'),
     name: z.string({ required_error: 'Room Name is required' }),
     roomNo: z.number({ required_error: 'Room Number is required' }),
     floorNo: z.number({ required_error: 'Floor Number is required' }),
