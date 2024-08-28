@@ -10,7 +10,7 @@ const createRoomIntoDB = async (payload: TRoom) => {
 };
 
 const getAllRoomsFromDB = async () => {
-  const result = await Room.find();
+  const result = await Room.find({ isDeleted: false });
   return result;
 };
 

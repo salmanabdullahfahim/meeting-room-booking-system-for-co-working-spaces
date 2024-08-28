@@ -6,6 +6,7 @@ import { bookingRoutes } from '../modules/Booking/booking.route';
 import auth from '../middleware/auth';
 import { USER_ROLE } from '../modules/User/user.constant';
 import { bookingController } from '../modules/Booking/booking.controller';
+import { userRoutes } from '../modules/User/user.route';
 
 const router = Router();
 
@@ -14,6 +15,7 @@ const moduleRoutes = [
   { path: '/slots', route: slotRoutes },
   { path: '/bookings', route: bookingRoutes },
   { path: '/auth', route: authRoutes },
+  { path: '/user', route: userRoutes },
 ];
 
 router.get(
