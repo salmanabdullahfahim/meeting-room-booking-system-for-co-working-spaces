@@ -74,7 +74,7 @@ const getAvailableSlotsFromDb = async (queryParams: TSlotQuery) => {
 };
 
 const getFullSlotFromDB = async () => {
-  const result = Slot.find();
+  const result = await Slot.find().populate('room');
   return result;
 };
 
@@ -91,13 +91,13 @@ const updateSingleSlotFromDB = async (id: string, payload: any) => {
     throw new AppError(httpStatus.CONFLICT, 'Slot already booked');
   }
 
-  const isRoomExists = await Room.findById(payload?.room);
+  const isRoomExists = await Room.findById(payload?.data?.room);
 
   if (!isRoomExists) {
     throw new AppError(httpStatus.NOT_FOUND, 'Room not found');
   }
 
-  const result = await Slot.findByIdAndUpdate(id, payload, {
+  const result = await Slot.findByIdAndUpdate(id, payload?.data, {
     new: true,
     runValidators: true,
   });
