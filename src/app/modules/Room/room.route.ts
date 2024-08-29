@@ -16,6 +16,12 @@ router.post(
 
 router.get('/', roomController.getAllRoom);
 
+router.get(
+  '/all-types-room',
+  auth(USER_ROLE.admin),
+  roomController.getAllTypesRooms,
+);
+
 router.get('/:id', roomController.getSingleRoom);
 
 router.put(

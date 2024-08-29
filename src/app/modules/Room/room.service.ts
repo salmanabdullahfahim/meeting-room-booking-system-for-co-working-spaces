@@ -14,6 +14,11 @@ const getAllRoomsFromDB = async () => {
   return result;
 };
 
+const getAllTypesRoomsFromDB = async () => {
+  const result = await Room.find();
+  return result;
+};
+
 const getSingleRoomFromDB = async (id: string) => {
   const result = await Room.findById(id);
   if (!result) throw new AppError(httpStatus.NOT_FOUND, 'Invalid Room Id');
@@ -44,6 +49,7 @@ const deleteRoomFromDB = async (id: string) => {
 export const RoomServices = {
   createRoomIntoDB,
   getAllRoomsFromDB,
+  getAllTypesRoomsFromDB,
   getSingleRoomFromDB,
   updateRoomIntoDB,
   deleteRoomFromDB,
