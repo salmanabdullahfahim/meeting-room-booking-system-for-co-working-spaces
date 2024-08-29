@@ -15,4 +15,12 @@ router.post(
 );
 router.get('/availability', slotController.availableSlots);
 
+router.get('/full-slots', auth(USER_ROLE.admin), slotController.getFullSlot);
+
+router.get('/:id', slotController.getSingleSlot);
+
+router.put('/:id', auth(USER_ROLE.admin), slotController.updateSlot);
+
+router.delete('/:id', auth(USER_ROLE.admin), slotController.deleteSlot);
+
 export const slotRoutes = router;

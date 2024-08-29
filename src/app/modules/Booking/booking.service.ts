@@ -5,7 +5,7 @@ import { Room } from '../Room/room.model';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
 import { User } from '../User/user.model';
-import { Slot } from '../Slot/slot..model';
+import { Slot } from '../Slot/slot.model';
 import { JwtPayload } from 'jsonwebtoken';
 
 const createBookingIntoDB = async (
