@@ -16,6 +16,9 @@ const createRoomValidationSchema = z.object({
 
 const updateRoomValidationSchema = z.object({
   body: z.object({
+    images: z
+      .array(z.string().url('Each image must be a valid URL'))
+      .optional(),
     name: z
       .string({ invalid_type_error: 'Room Name must be a string' })
       .optional(),
