@@ -119,6 +119,7 @@ const getAllBookingFromDB = async () => {
       path: 'user',
       select: '-password -__v',
     })
+    .populate('slots')
     .exec();
   return result;
 };
