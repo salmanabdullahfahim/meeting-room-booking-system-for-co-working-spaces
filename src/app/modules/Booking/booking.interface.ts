@@ -6,6 +6,8 @@ export type TBooking = {
   user: Types.ObjectId;
   date: string;
   totalAmount: number;
+  transactionId?: string;
+  paymentStatus: string;
   isConfirmed: 'confirmed' | 'unconfirmed' | 'canceled';
   isDeleted: boolean;
 };

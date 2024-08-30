@@ -7,6 +7,7 @@ import httpStatus from 'http-status';
 import { User } from '../User/user.model';
 import { Slot } from '../Slot/slot.model';
 import { JwtPayload } from 'jsonwebtoken';
+import { initiatePayment } from '../Payment/payment.utils';
 
 const createBookingIntoDB = async (
   payload: Omit<TBooking, 'totalAmount'>,
@@ -55,6 +56,7 @@ const createBookingIntoDB = async (
     const pricePerSlot = roomInfo.pricePerSlot;
     const totalAmount = slots.length * pricePerSlot;
 
+    const transactionId = `TXN-${Date.now()}`;
     const booking = await Booking.create(
       [
         {
@@ -62,6 +64,7 @@ const createBookingIntoDB = async (
           date,
           slots,
           user,
+          transactionId,
           totalAmount,
           isConfirmed,
         },
@@ -104,7 +107,22 @@ const createBookingIntoDB = async (
     // @ts-ignore
     populatedBooking.slots = slotsDetail;
 
-    return populatedBooking as TBooking;
+    // payment
+
+    const paymentData = {
+      transactionId,
+      totalAmount,
+      customerName: userInfo.name,
+      customerEmail: userInfo.email,
+      customerPhone: userInfo.phone,
+      customerAddress: userInfo.address,
+    };
+
+    const paymentSession = await initiatePayment(paymentData);
+
+    console.log(paymentSession);
+
+    return paymentSession;
   } catch (error) {
     await session.abortTransaction();
     await session.endSession();
