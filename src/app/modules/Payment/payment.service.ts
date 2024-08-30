@@ -13,7 +13,7 @@ const confirmationService = async (transactionId: string) => {
     result = await Booking.findOneAndUpdate(
       { transactionId },
       {
-        paymentStatus: 'Paid',
+        paymentStatus: 'paid',
         isConfirmed: 'confirmed',
       },
     );
