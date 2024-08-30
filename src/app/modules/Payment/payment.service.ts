@@ -6,8 +6,6 @@ import { Booking } from '../Booking/booking.model';
 const confirmationService = async (transactionId: string) => {
   const verifyResponse = await verifyPayment(transactionId);
 
-  console.log('verifyresponce', verifyResponse);
-
   let result;
   let message = '';
 
@@ -24,7 +22,7 @@ const confirmationService = async (transactionId: string) => {
     message = 'Payment Failed!';
   }
 
-  const filePath = join(__dirname, '../../views/confirmation.html');
+  const filePath = join(__dirname, '../../../../public/confirmation.html');
   let template = readFileSync(filePath, 'utf-8');
 
   template = template.replace('{{message}}', message);
